@@ -11,6 +11,11 @@ def fill(event, context):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('logfill-table')
 
+    # the shit timed out
+    # id_list = ['2001577604', '2001568833']
+
+    # maybe I should use sqs for multiple id
+
     response = table.get_item(
     Key={
             'id': '2001577604',
@@ -25,7 +30,7 @@ def fill(event, context):
     # check datetime, if not saturday ors sunday, abort the function
     day_of_week = datetime.datetime.today().weekday()
     # if it's weekend
-    if(day_of_week == 6 or day_of_week == 7):
+    if(day_of_week == 6 or day_of_week == 5):
         clock_in = '0'
         clock_out = '0'
         activity = 'off'
@@ -67,9 +72,7 @@ def fill(event, context):
     # send ses here!
 
     body = {
-        "message": "yay mechanize working, but it's not done yet",
-        "activity": activity,
-        "description": description,
+        "message": "yay it's working",
         "input": event
     }
 
